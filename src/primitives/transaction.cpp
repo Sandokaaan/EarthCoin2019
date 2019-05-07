@@ -104,7 +104,7 @@ std::string CTransaction::ToString() const
         nVersion,
         vin.size(),
         vout.size(),
-        nLockTime),
+        nLockTime,
         strTxComment.substr(0,30).c_str());
     for (const auto& tx_in : vin)
         str += "    " + tx_in.ToString() + "\n";
