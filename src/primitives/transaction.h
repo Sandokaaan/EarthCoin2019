@@ -201,6 +201,7 @@ inline void UnserializeTransaction(TxType& tx, Stream& s) {
     unsigned char flags = 0;
     tx.vin.clear();
     tx.vout.clear();
+    tx.strTxComment.clear();
     /* Try to read the vin. In case the dummy is there, this will be read as an empty vector. */
     s >> tx.vin;
     if (tx.vin.size() == 0 && fAllowWitness) {
@@ -226,6 +227,8 @@ inline void UnserializeTransaction(TxType& tx, Stream& s) {
         throw std::ios_base::failure("Unknown transaction optional data");
     }
     s >> tx.nLockTime;
+    if (tx.nVersion > 1)
+	    s >> tx.strTxComment;
 }
 
 template<typename Stream, typename TxType>
@@ -255,6 +258,8 @@ inline void SerializeTransaction(const TxType& tx, Stream& s) {
         }
     }
     s << tx.nLockTime;
+    if (tx.nVersion > 1)
+	    s << tx.strTxComment;
 }
 
 
@@ -282,6 +287,7 @@ public:
     const std::vector<CTxOut> vout;
     const int32_t nVersion;
     const uint32_t nLockTime;
+    const std::string strTxComment;
 
 private:
     /** Memory only. */
@@ -363,6 +369,7 @@ struct CMutableTransaction
     std::vector<CTxOut> vout;
     int32_t nVersion;
     uint32_t nLockTime;
+    std::string strTxComment;
 
     CMutableTransaction();
     explicit CMutableTransaction(const CTransaction& tx);
