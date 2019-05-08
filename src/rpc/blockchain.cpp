@@ -43,7 +43,7 @@
 #include <mutex>
 #include <condition_variable>
 
-const boolean DISABLE_SOFTFORKS_INFO = true;    // temporary disable softforks till all nodes be upgraded
+const bool DISABLE_SOFTFORKS_INFO = true;    // temporary disable softforks till all nodes be upgraded
 
 struct CUpdatedBlock
 {
