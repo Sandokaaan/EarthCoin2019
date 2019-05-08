@@ -1089,7 +1089,11 @@ bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus:
     catch (const std::exception& e) {
         return error("%s: Deserialize or I/O error - %s at %s", __func__, e.what(), pos.ToString());
     }
-
+    
+    // A different rule for the genesis block. Because the original EAC genesis wan not mined correctly.
+    if (block.hashPrevBlock == uint256S("0x00"))
+        return true;
+    
     // Check the header
     if (!CheckProofOfWork(block.GetPoWHash(), block.nBits, consensusParams))
         return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
