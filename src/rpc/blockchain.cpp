@@ -43,6 +43,8 @@
 #include <mutex>
 #include <condition_variable>
 
+const boolean DISABLE_SOFTFORKS_INFO = true;    // temporary disable softforks till all nodes be upgraded
+
 struct CUpdatedBlock
 {
     uint256 hash;
@@ -1273,8 +1275,10 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     for (int pos = Consensus::DEPLOYMENT_CSV; pos != Consensus::MAX_VERSION_BITS_DEPLOYMENTS; ++pos) {
         BIP9SoftForkDescPushBack(bip9_softforks, consensusParams, static_cast<Consensus::DeploymentPos>(pos));
     }
-    obj.pushKV("softforks",             softforks);
-    obj.pushKV("bip9_softforks", bip9_softforks);
+    if (!DISABLE_SOFTFORKS_INFO) {
+        obj.pushKV("softforks",             softforks);
+        obj.pushKV("bip9_softforks", bip9_softforks);
+    }
 
     obj.pushKV("warnings", GetWarnings("statusbar"));
     return obj;
