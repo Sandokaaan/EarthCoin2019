@@ -42,10 +42,10 @@ QString BitcoinUnits::longName(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("EAC");
-    case mBTC: return QString("zemkos");
-    case uBTC: return QString("sandos");
-    case SAT: return QString("elementos");
+    case BTC: return QString("Earthcoins");
+    case mBTC: return QString("miliEarthcoins");
+    case uBTC: return QString("microEarthcoins");
+    case SAT: return QString("satoEarthcoins");
     default: return QString("???");
     }
 }
@@ -65,9 +65,9 @@ QString BitcoinUnits::description(int unit)
     switch(unit)
     {
     case BTC: return QString("Earthcoins");
-    case mBTC: return QString("Lites (1 / 1" THIN_SP_UTF8 "000)");
-    case uBTC: return QString("Photons (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-    case SAT: return QString("Liteoshis (sat) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case mBTC: return QString("miliEarthcoins (1 / 1" THIN_SP_UTF8 "000)");
+    case uBTC: return QString("microEarthcoins (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case SAT: return QString("satoEarthcoins (sat) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
