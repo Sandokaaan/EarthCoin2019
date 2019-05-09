@@ -77,10 +77,10 @@ public:
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 525600;
         consensus.BIP16Height = 0; // October 1, 2012 it was before EAC genesis // int64 nBIP16SwitchTime = 1349049600
-        consensus.BIP34Height = 710000;                                                                         // the first block version 2 ?
+        consensus.BIP34Height = 710000;      // EAC dev note: after this height only block version 2 are allowed
         consensus.BIP34Hash = uint256S("fa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
-        consensus.BIP65Height = 918684; // bab3041e8977e0dc3eeff63fe707b92bde1dd449d8efafb248c27c8264cc311a     // OP_CHECKLOCKTIMEVERIFY
-        consensus.BIP66Height = 811879; // 7aceee012833fa8952f8835d8b1b3ae233cd6ab08fdb27a771d2bd7bdc491894
+        consensus.BIP65Height = 99999999; // EAC dev note: disabled for now     // OP_CHECKLOCKTIMEVERIFY
+        consensus.BIP66Height = 99999999; // EAC dev note: disabled for now
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
         consensus.nPowTargetTimespan = 30 * 60;  // 30 minutes
         consensus.nPowTargetSpacing = 60;        // 60 seconds
