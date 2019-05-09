@@ -1,10 +1,6 @@
 Earthcoin Core integration/staging tree
 =====================================
 
-[![Build Status](https://travis-ci.org/earthcoin-project/earthcoin.svg?branch=master)](https://travis-ci.org/earthcoin-project/earthcoin)
-
-https://earthcoin.org
-
 What is Earthcoin?
 ----------------
 
@@ -15,7 +11,7 @@ out collectively by the network. Earthcoin Core is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Earthcoin Core software, see [https://earthcoin.org](https://earthcoin.org).
+the Earthcoin Core software, see [http://deveac.com](http://deveac.com).
 
 License
 -------
@@ -27,12 +23,12 @@ Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/earthcoin-project/earthcoin/tags) are created
+completely stable. [Tags](https://github.com/Sandokaaan/EarthCoin2019/tags) are created
 regularly to indicate new official, stable release versions of Earthcoin Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The developer [mailing list](https://groups.google.com/forum/#!forum/earthcoin-dev)
+The developer [mailing list](https://bitcointalk.org/index.php?topic=2161853)
 should be used to discuss complicated or controversial changes before working
 on a patch set.
 
