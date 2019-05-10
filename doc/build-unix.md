@@ -249,11 +249,13 @@ Setup and Build Example: Arch Linux
 This example lists the steps necessary to setup and build a command line only, non-wallet distribution of the latest changes on Arch Linux:
 
     pacman -S git base-devel boost libevent python
-    git clone https://github.com/earthcoin-project/earthcoin.git
-    cd earthcoin/
+    git clone https://github.com/Sandokaaan/EarthCoin2019.git
+    cd EarthCoin2019/
     ./autogen.sh
-    ./configure --disable-wallet --without-gui --without-miniupnpc
-    make check
+    ./configure --without-gui --without-miniupnpc --disable-tests --disable-man
+    make
+    cd src
+    strip earthcoind earthcoin-cli earthcoin-tx
 
 Note:
 Enabling wallet support requires either compiling against a Berkeley DB newer than 4.8 (package `db`) using `--with-incompatible-bdb`,
