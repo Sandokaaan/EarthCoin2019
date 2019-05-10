@@ -24,7 +24,7 @@ See [dependencies.md](dependencies.md) for a complete overview.
 
 Download the source code:
 ```
-git clone https://github.com/earthcoin-project/earthcoin
+git clone https://github.com/Sandokaaan/EarthCoin2019.git
 ```
 
 ## Building Earthcoin Core
