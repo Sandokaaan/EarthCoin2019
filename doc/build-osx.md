@@ -43,8 +43,8 @@ Build Earthcoin Core
 
 1. Clone the Earthcoin Core source code and cd into `earthcoin`
 
-        git clone https://github.com/earthcoin-project/earthcoin
-        cd earthcoin
+        git clone https://github.com/Sandokaaan/EarthCoin2019.git
+        cd EarthCoin2019
 
 2.  Build Earthcoin Core:
 
