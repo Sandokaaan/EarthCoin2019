@@ -527,7 +527,7 @@ bool CBlockPolicyEstimator::removeTx(uint256 hash, bool inBlock)
 CBlockPolicyEstimator::CBlockPolicyEstimator()
     : nBestSeenHeight(0), firstRecordedHeight(0), historicalFirst(0), historicalBest(0), trackedTxs(0), untrackedTxs(0)
 {
-    static_assert(MIN_BUCKET_FEERATE > 0, "Min feerate must be nonzero");
+    static_assert(MIN_BUCKET_FEERATE >= 0, "Min feerate must be non-negative");
     size_t bucketIndex = 0;
     for (double bucketBoundary = MIN_BUCKET_FEERATE; bucketBoundary <= MAX_BUCKET_FEERATE; bucketBoundary *= FEE_SPACING, bucketIndex++) {
         buckets.push_back(bucketBoundary);
