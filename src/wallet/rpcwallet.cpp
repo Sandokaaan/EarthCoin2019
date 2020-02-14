@@ -520,7 +520,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
             "1. \"address\"            (string, required) The earthcoin address to send to.\n"
             "2. \"amount\"             (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
             "3. \"comment\"            (string, optional) A comment used to store what the transaction is for. \n"   // SANDO: LIMIT IT TO 30 bytes
-            "                             This is part of the transaction, will be stored in the blockchain\n"
+            "                             Only the first 30 characters of this message will be stored in the blockchain\n"
             "4. \"comment_to\"         (string, optional) A comment to store the name of the person or organization \n"
             "                             to which you're sending the transaction. This is not part of the \n"
             "                             transaction, just kept in your wallet.\n"
