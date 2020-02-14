@@ -235,4 +235,11 @@ void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry,
     if (include_hex) {
         entry.pushKV("hex", EncodeHexTx(tx, serialize_flags)); // The hex-encoded transaction. Used the name "hex" to be consistent with the verbose output of "getrawtransaction".
     }
+    
+    // SANDO txComment show
+    if ( (tx.nVersion == 2) && (tx.strTxComment.size()>0) ){
+        entry.pushKV("txComment", tx.strTxComment);
+    }
+
+    
 }
