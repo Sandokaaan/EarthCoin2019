@@ -136,9 +136,15 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     QSet<QString> setAddress; // Used to detect duplicates
     int nAddresses = 0;
 
+    std::string txComment; 			//SANDO hook for txComment
+
     // Pre-check input data for validity
     for (const SendCoinsRecipient &rcp : recipients)
     {
+	if (txComment.empty())
+	    txComment = rcp.message.toStdString();   //SANDO hook for txComment
+
+
         if (rcp.fSubtractFeeFromAmount)
             fSubtractFeeFromAmount = true;
 
@@ -198,7 +204,20 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     {
         CAmount nFeeRequired = 0;
         int nChangePosRet = -1;
-        std::string strFailReason;
+        std::string strFailReason = txComment;   //SANDO hook to pass txComment
+
+
+///sando debug
+/*
+    QString qs1 = tr("comment debug");
+    qs1.append("<br />");
+    qs1.append(strFailReason.c_str());
+    SendConfirmationDialog cd1(tr("comment debug"), qs1);
+    cd1.exec();
+    QMessageBox::StandardButton ret1 = static_cast<QMessageBox::StandardButton>(cd1.result());
+*/
+///sando debug
+
 
         auto& newTx = transaction.getWtx();
         newTx = m_wallet->createTransaction(vecSend, coinControl, true /* sign */, nChangePosRet, nFeeRequired, strFailReason);

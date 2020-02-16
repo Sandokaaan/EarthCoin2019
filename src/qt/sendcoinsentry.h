@@ -48,7 +48,7 @@ public:
     void setFocus();
 
 public Q_SLOTS:
-    void clear();
+    void clear(bool showMessage = true);
     void checkSubtractFeeFromAmount();
 
 Q_SIGNALS:

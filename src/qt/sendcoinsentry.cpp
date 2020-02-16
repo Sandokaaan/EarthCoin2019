@@ -87,7 +87,7 @@ void SendCoinsEntry::setModel(WalletModel *_model)
     clear();
 }
 
-void SendCoinsEntry::clear()
+void SendCoinsEntry::clear(bool showMessage)
 {
     // clear UI elements for normal payment
     ui->payTo->clear();
@@ -95,8 +95,10 @@ void SendCoinsEntry::clear()
     ui->payAmount->clear();
     ui->checkboxSubtractFeeFromAmount->setCheckState(Qt::Unchecked);
     ui->messageTextLabel->clear();
-    ui->messageTextLabel->hide();
-    ui->messageLabel->hide();
+    if (!showMessage) {
+        ui->messageTextLabel->hide();
+        ui->messageLabel->hide();
+    }
     // clear UI elements for unauthenticated payment request
     ui->payTo_is->clear();
     ui->memoTextLabel_is->clear();
@@ -219,8 +221,8 @@ void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
     {
         // message
         ui->messageTextLabel->setText(recipient.message);
-        ui->messageTextLabel->setVisible(!recipient.message.isEmpty());
-        ui->messageLabel->setVisible(!recipient.message.isEmpty());
+        ui->messageTextLabel->setVisible(true);
+        ui->messageLabel->setVisible(true);
 
         ui->addAsLabel->clear();
         ui->payTo->setText(recipient.address); // this may set a label from addressbook
