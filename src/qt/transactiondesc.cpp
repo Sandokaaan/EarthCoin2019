@@ -251,7 +251,8 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
     strHTML += "<b>" + tr("Transaction total size") + ":</b> " + QString::number(wtx.tx->GetTotalSize()) + " bytes<br>";
     strHTML += "<b>" + tr("Transaction virtual size") + ":</b> " + QString::number(GetVirtualTransactionSize(*wtx.tx)) + " bytes<br>";
     strHTML += "<b>" + tr("Output index") + ":</b> " + QString::number(rec->getOutputIndex()) + "<br>";
-    strHTML += "<b>" + tr("Transaction comment") + ":</b> " + GUIUtil::HtmlEscape(wtx.tx->strTxComment); + "<br>";
+    if (wtx.tx->nVersion == 2)
+        strHTML += "<b>" + tr("Transaction comment") + ":</b> " + GUIUtil::HtmlEscape(wtx.tx->strTxComment); + "<br>";
 
     // Message from normal bitcoin:URI (bitcoin:123...?message=example)
     for (const std::pair<std::string, std::string>& r : orderForm)
