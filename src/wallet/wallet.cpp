@@ -2663,7 +2663,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransac
                          int& nChangePosInOut, std::string& strFailReason, const CCoinControl& coin_control, bool sign)
 {
     // SANDO hook to pass txComment here
-    std::string txComment = strFailReason.substr(0,30);
+    std::string txComment = strFailReason.substr(0,252);
     strFailReason.clear();
     // end of the hook
 
