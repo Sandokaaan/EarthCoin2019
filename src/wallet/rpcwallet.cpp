@@ -562,8 +562,8 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
     std::string txComment = "";
     if (!request.params[2].isNull() && !request.params[2].get_str().empty()) {
 	txComment = request.params[2].get_str();  // SANDO - here limit is to 30 bytes
-	if (txComment.size()>30)
-	    txComment.resize(30);
+	if (txComment.size()>252)
+	    txComment.resize(252);
         mapValue["comment"] = request.params[2].get_str();
     }
     if (!request.params[3].isNull() && !request.params[3].get_str().empty())
