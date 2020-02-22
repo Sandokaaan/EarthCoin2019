@@ -11,6 +11,26 @@
 #include <uint256.h>
 #include <util.h>
 
+// Suggestion of another algorithm for nActualSpacing calculation:
+// - sort the last 11 blocks (used in GetMetianTimePast function) according the block time
+// - then calculate time between the median block and any next block, and divide it by its distance (count of blocks)
+// - average such values for all 5 last blocks
+// This calculation should be a more fair in case of random variance in block count rate.
+int64_t CalcActualSpacing(const CBlockIndex* pindex)
+{
+    int64_t sbta[11];	// Sorted Block Times Array
+    for (int i=0; i<11; i++)
+    {
+        sbt[i] = pindex->GetBlockTime();
+	pindex = pindex->->pprev;    
+    }
+    std::sort(sbta, sbta+n); 
+    int64_t avgTimeDelta = 0;
+    for (int i=6; i<11; i++)
+        avgTimeDelta += (sbta[i]-sbta[5])/i;
+    return (avgTimeDelta/5);
+}
+
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
