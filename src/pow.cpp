@@ -13,22 +13,24 @@
 
 // Suggestion of another algorithm for nActualSpacing calculation:
 // - sort the last 11 blocks (used in GetMetianTimePast function) according the block time
-// - then calculate time between the median block and any next block, and divide it by its distance (count of blocks)
-// - average such values for all 5 last blocks
-// This calculation should be a more fair in case of random variance in block count rate.
+// - then calculate time between the median block and the block with the highest timestamp -> shortTime (distance 5 blocks)
+// - calculate time between the timestamp of the top-block and the timestamp 23 blocks ago -> longTime (distance 22 blocks)
+// - return an average of shortTime and longTime
 int64_t CalcActualSpacing(const CBlockIndex* pindex)
 {
+    int64_t lastTime = pindex->GetBlockTime();
     int64_t sbta[11];	// Sorted Block Times Array
     for (int i=0; i<11; i++)
     {
         sbt[i] = pindex->GetBlockTime();
-	pindex = pindex->->pprev;    
+	pindex = pindex->pprev;    
     }
     std::sort(sbta, sbta+n); 
-    int64_t avgTimeDelta = 0;
-    for (int i=6; i<11; i++)
-        avgTimeDelta += (sbta[i]-sbta[5])/i;
-    return (avgTimeDelta/5);
+    int64_t shortTime = (sbta[10]-sbta[5])/5;
+    for (int i=0; i<12; i++)
+        pindex = pindex->pprev;
+    int64_t longTime = (lastTime - pindex->GetBlockTime())/22;
+    return ((shortTime+longTime)/2);
 }
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
@@ -51,7 +53,11 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
 {
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
+	
+    // if (blockHeight < swapAlgoHeight)	            // !!!!!
     int64_t nActualSpacing = pindexLast->GetBlockTime() - nFirstBlockTime;
+    // else nActualSpacing = CalcActualSpacing(pindexLast); // !!!!!
+	
     // limit the adjustment
     if (nActualSpacing < params.nPowTargetSpacing/16)
 	    nActualSpacing = params.nPowTargetSpacing/16;
