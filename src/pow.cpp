@@ -14,7 +14,7 @@
 // Suggestion of another algorithm for nActualSpacing calculation:
 // - sort the last 11 blocks (used in GetMetianTimePast function) according the block time
 // - then calculate time between the median block and the block with the highest timestamp -> shortTime (distance 5 blocks)
-// - calculate time between the timestamp of the top-block and the timestamp 23 blocks ago -> longTime (distance 22 blocks)
+// - calculate time between the timestamp of the top-block and the timestamp 23 blocks ago -> longTime (distance 23 blocks)
 // - return an average of shortTime and longTime
 int64_t CalcActualSpacing(const CBlockIndex* pindex)
 {
@@ -27,9 +27,11 @@ int64_t CalcActualSpacing(const CBlockIndex* pindex)
     }
     std::sort(sbta, sbta+n); 
     int64_t shortTime = (sbta[10]-sbta[5])/5;
+    // after the first loop, pindex points to the block "-11"; then go back next 12 blocks and get pointed to the block "-23"
+    // so distance is 23-0 = 23	
     for (int i=0; i<12; i++)
         pindex = pindex->pprev;
-    int64_t longTime = (lastTime - pindex->GetBlockTime())/22;
+    int64_t longTime = (lastTime - pindex->GetBlockTime())/23;
     return ((shortTime+longTime)/2);
 }
 
