@@ -8,7 +8,6 @@
 #include <hash.h>
 #include <tinyformat.h>
 #include <utilstrencodings.h>
-#include <util.h>
 
 std::string COutPoint::ToString() const
 {
@@ -106,7 +105,7 @@ std::string CTransaction::ToString() const
         vin.size(),
         vout.size(),
         nLockTime,
-        strTxComment.c_str());
+        strTxComment.substr(0,90).c_str());
     for (const auto& tx_in : vin)
         str += "    " + tx_in.ToString() + "\n";
     for (const auto& tx_in : vin)
