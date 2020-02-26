@@ -1230,6 +1230,57 @@ std::string CopyrightHolders(const std::string& strPrefix)
     return strCopyrightHolders;
 }
 
+
+// Check the unicode string and limit its size to 30 bytes
+std::string ValidateUnicodeString(const std::string& s)
+{
+    int n = s.length();
+    if (n > 90)
+        n = 90;
+    while (n) {
+        unsigned char c = s[n-1];
+        if (c & 0x80) {			// Is it non-ASCII ?
+	    n--;
+	    if ((c & 0xc0) != 0x80) 	// Is it not a next UTF-8 byte?
+		break;			// So it is eighter the first UTF-8 byte or non-UTF-8, we can break it here.
+	}
+        else 
+	    break;			// It is regular ASCII, we can break it here.
+    }
+    return s.substr(0,n);
+}
+
+/*
+            if ((c >> 3) == 0x1e) {
+		if ((i+3) >= n)
+		    break;
+		if ( ((s[i+1] & 0xc0) != 0x80) || ((s[i+2] & 0xc0) != 0x80) || ((s[i+3] & 0xc0) != 0x80) )
+                    break;
+		i += 4;
+            }
+            else if ((c >> 4) == 0x0e) {
+		if ((i+2) >= n)
+		    break;
+		if ( ((s[i+1] & 0xc0) != 0x80) || ((s[i+2] & 0xc0) != 0x80) )
+                    break;
+                i += 3;
+            }
+            else if ((c >> 5) == 0x06) {
+		if ((i+2) >= n)
+		    break;
+		if ( ((s[i+1] & 0xc0) != 0x80) )
+                    break;
+                i += 2;
+            }
+            else
+		break;			// it is not a valid utf-8 code -> cut-out here
+        }
+        else
+            i++;
+    }
+    return s.substr(0,i);
+}*/
+
 // Obtain the application startup time (used for uptime calculation)
 int64_t GetStartupTime()
 {
