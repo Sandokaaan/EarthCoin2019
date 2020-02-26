@@ -1250,37 +1250,6 @@ std::string ValidateUnicodeString(const std::string& s)
     return s.substr(0,n);
 }
 
-/*
-            if ((c >> 3) == 0x1e) {
-		if ((i+3) >= n)
-		    break;
-		if ( ((s[i+1] & 0xc0) != 0x80) || ((s[i+2] & 0xc0) != 0x80) || ((s[i+3] & 0xc0) != 0x80) )
-                    break;
-		i += 4;
-            }
-            else if ((c >> 4) == 0x0e) {
-		if ((i+2) >= n)
-		    break;
-		if ( ((s[i+1] & 0xc0) != 0x80) || ((s[i+2] & 0xc0) != 0x80) )
-                    break;
-                i += 3;
-            }
-            else if ((c >> 5) == 0x06) {
-		if ((i+2) >= n)
-		    break;
-		if ( ((s[i+1] & 0xc0) != 0x80) )
-                    break;
-                i += 2;
-            }
-            else
-		break;			// it is not a valid utf-8 code -> cut-out here
-        }
-        else
-            i++;
-    }
-    return s.substr(0,i);
-}*/
-
 // Obtain the application startup time (used for uptime calculation)
 int64_t GetStartupTime()
 {
