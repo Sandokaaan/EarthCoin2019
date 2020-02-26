@@ -106,7 +106,7 @@ std::string CTransaction::ToString() const
         vin.size(),
         vout.size(),
         nLockTime,
-        ValidateUnicodeString(strTxComment).c_str());
+        strTxComment);
     for (const auto& tx_in : vin)
         str += "    " + tx_in.ToString() + "\n";
     for (const auto& tx_in : vin)
