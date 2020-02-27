@@ -24,6 +24,20 @@
 
 #include <univalue.h>
 
+// SANDO hot-fix: try to fix som incorrect utf-8 messages
+std::string IgnoreInvalidMessage(const std::string& s) {
+    std::string rts = s;
+    //const char * c = s.c_str();
+    int n = rts.length();
+    while (n && ((rts[--n] & 0x80) != 0x80));   // seek the last NON-ASCII
+    int pos2 = n;
+    while (n && ((rts[n] & 0xc0) == 0x80)) n--; // seek the last NON-UTF8 next-byte
+    int pos1 = n;
+    if ((pos1>=0) && (pos2>0))
+        rts.replace(pos1, 1+pos2-pos1, "______");
+    return rts;
+}
+
 static const char DEFAULT_RPCCONNECT[] = "127.0.0.1";
 static const int DEFAULT_HTTP_CLIENT_TIMEOUT=900;
 static const bool DEFAULT_NAMED=false;
@@ -395,8 +409,11 @@ static UniValue CallRPC(BaseRequestHandler *rh, const std::string& strMethod, co
 
     // Parse reply
     UniValue valReply(UniValue::VSTR);
-    if (!valReply.read(response.body))
-        throw std::runtime_error("couldn't parse reply from server");
+    if (!valReply.read(response.body)) {
+        std::string shortened=IgnoreInvalidMessage(response.body);  // SANDO hot-fix incorrect UTF-8 message
+        if (!valReply.read(shortened))
+            throw std::runtime_error("couldn't parse reply from server");
+    }
     const UniValue reply = rh->ProcessReply(valReply);
     if (reply.empty())
         throw std::runtime_error("expected reply to have result, error and id properties");
