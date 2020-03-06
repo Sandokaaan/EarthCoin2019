@@ -58,9 +58,9 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
 	
-    // if (blockHeight < swapAlgoHeight)	            // !!!!!
+    // if (pindexLast->nHeight < swapAlgoHeight)	                     // !!!!!
     int64_t nActualSpacing = pindexLast->GetBlockTime() - nFirstBlockTime;
-    // else nActualSpacing = CalcActualSpacing(pindexLast); // !!!!!
+    // else nActualSpacing = CalcActualSpacing(pindexLast);                  // !!!!!
 	
     // limit the adjustment
     if (nActualSpacing < params.nPowTargetSpacing/16)
