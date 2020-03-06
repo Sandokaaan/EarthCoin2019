@@ -19,7 +19,9 @@
 int64_t CalcActualSpacing(const CBlockIndex* pindex)
 {
     int64_t lastTime = pindex->GetBlockTime();
-    int64_t sbta[11];	// Sorted Block Times Array
+    uint64_t rndNum = (pindex->nNonce) ^ (pindex->nBits) ^ (uint64_t)lastTime;     // bitwise XOR
+    int rndPeriod = (rndNum % 23);		            // Unpredicable lenght of the second averaging period
+    int64_t sbta[11];	                                    // Sorted Block Times Array
     for (int i=0; i<11; i++)
     {
         sbt[i] = pindex->GetBlockTime();
@@ -27,11 +29,11 @@ int64_t CalcActualSpacing(const CBlockIndex* pindex)
     }
     std::sort(sbta, sbta+n); 
     int64_t shortTime = (sbta[10]-sbta[5])/5;
-    // after the first loop, pindex points to the block "-11"; then go back next 12 blocks and get pointed to the block "-23"
-    // so distance is 23-0 = 23	
-    for (int i=0; i<12; i++)
+    // after the first loop, pindex points to the block "-11"; then go back next (12+longTimePeriod) blocks and get pointed to the block "-23"
+    // so distance is (23+longTimePeriod)
+    for (int i=0; i<(12+rndPeriod); i++)
         pindex = pindex->pprev;
-    int64_t longTime = (lastTime - pindex->GetBlockTime())/23;
+    int64_t longTime = (lastTime - pindex->GetBlockTime())/(23+rndPeriod);
     return ((shortTime+longTime)/2);
 }
 
