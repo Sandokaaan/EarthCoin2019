@@ -34,6 +34,9 @@
 #include <boost/signals2/signal.hpp>
 #include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
 
+// A maximal length of txComment
+const int TX_COMMENT_LIMIT = 252;
+
 // Application startup time (used for uptime calculation)
 int64_t GetStartupTime();
 
