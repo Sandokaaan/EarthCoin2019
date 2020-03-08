@@ -21,6 +21,8 @@
 
 // A maximal length of txComment
 const int TX_COMMENT_LIMIT = 252;
+// Check txComment in UTF-8 and limit it to 252 bytes
+std::string ValidateUnicodeString(const std::string& input);
 
 /** Used by SanitizeString() */
 enum SafeChars
