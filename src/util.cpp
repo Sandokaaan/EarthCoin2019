@@ -1256,23 +1256,23 @@ std::string ValidateUnicodeString(const std::string& s)
         unsigned char c = s[i];
 	if (c < 0x80)
 	    continue;                  // regular ASCII
-	if (  ((c & 0xe0) = 0xc0) && ((i+1)<n) 
-	      && ((((unsigned char)s[i+1])&0xc0)==0x80 ) )
+	if (  ((c & 0xe0) == 0xc0) && ((i+1)<n) 
+	      && ((((unsigned char)s[i+1])&0xc0) == 0x80 ) )
 	{
 	    i++;
 	    continue;	
 	}
-	else if (  ((c & 0xf0) = 0xe0) && ((i+2)<n) 
-		   && ((((unsigned char)s[i+1])&0xc0)==0x80 )
-		   && ((((unsigned char)s[i+2])&0xc0)==0x80 ) )
+	else if (  ((c & 0xf0) == 0xe0) && ((i+2)<n) 
+		   && ((((unsigned char)s[i+1])&0xc0) == 0x80 )
+		   && ((((unsigned char)s[i+2])&0xc0) == 0x80 ) )
 	{
 	    i+=2;
 	    continue;	
 	}
-	else if (  ((c & 0xf8) = 0xf0) && ((i+3)<n) 
-		   && ((((unsigned char)s[i+1])&0xc0)==0x80 )
-		   && ((((unsigned char)s[i+2])&0xc0)==0x80 )
-		   && ((((unsigned char)s[i+3])&0xc0)==0x80 ) )
+	else if (  ((c & 0xf8) == 0xf0) && ((i+3)<n) 
+		   && ((((unsigned char)s[i+1])&0xc0) == 0x80 )
+		   && ((((unsigned char)s[i+2])&0xc0) == 0x80 )
+		   && ((((unsigned char)s[i+3])&0xc0) == 0x80 ) )
         {
 	    i+=3;
 	    continue;	
