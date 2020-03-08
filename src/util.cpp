@@ -1235,17 +1235,51 @@ std::string CopyrightHolders(const std::string& strPrefix)
 std::string ValidateUnicodeString(const std::string& s)
 {
     int n = s.length();
-    if (n > 90)
-        n = 90;
-    while (n) {
-        unsigned char c = s[n-1];
-        if (c & 0x80) {			// Is it non-ASCII ?
-	    n--;
-	    if ((c & 0xc0) != 0x80) 	// Is it not a next UTF-8 byte?
-		break;			// So it is eighter the first UTF-8 byte or non-UTF-8, we can break it here.
+    if (n > TX_COMMENT_LIMIT) 
+    {
+        n = TX_COMMENT_LIMIT;
+        while (n) 
+	{
+            unsigned char c = s[n-1];
+            if (c & 0x80) 
+	    {			               // Is it non-ASCII ?
+	        n--;
+	        if ((c & 0xc0) != 0x80) 	// Is it not a next UTF-8 byte?
+		    break;			// So it is eighter the first UTF-8 byte or non-UTF-8, we can break it here.
+	    }
+            else 
+	        break;			// It is regular ASCII, we can break it here.
+        }
+    }
+    for (int i=0; i<n; i++) 
+    {
+        unsigned char c = s[i];
+	if (c < 0x80)
+	    continue;                  // regular ASCII
+	if (  ((c & 0xe0) = 0xc0) && ((i+1)<n) 
+	      && ((((unsigned char)s[i+1])&0xc0)==0x80 ) )
+	{
+	    i++;
+	    continue;	
 	}
-        else 
-	    break;			// It is regular ASCII, we can break it here.
+	else if (  ((c & 0xf0) = 0xe0) && ((i+2)<n) 
+		   && ((((unsigned char)s[i+1])&0xc0)==0x80 )
+		   && ((((unsigned char)s[i+2])&0xc0)==0x80 ) )
+	{
+	    i+=2;
+	    continue;	
+	}
+	else if (  ((c & 0xf8) = 0xf0) && ((i+3)<n) 
+		   && ((((unsigned char)s[i+1])&0xc0)==0x80 )
+		   && ((((unsigned char)s[i+2])&0xc0)==0x80 )
+		   && ((((unsigned char)s[i+3])&0xc0)==0x80 ) )
+        {
+	    i+=3;
+	    continue;	
+	}
+	// if we got here, it was an unvalid UTF-8 caracter, so cut here
+	n = i;
+	break;
     }
     return s.substr(0,n);
 }
